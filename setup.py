@@ -4,7 +4,7 @@ from setuptools import setup
 
 setup(
     name='django-detective',
-    version='0.1.0',
+    version='0.2.0',
     description='Django app that tracks all user requests.',
     long_description=open('README.rst').read(),
     author='Pragmatic Mates',
@@ -29,6 +29,6 @@ setup(
         'License :: OSI Approved :: BSD License',
         'Development Status :: 3 - Alpha'
     ],
-    license='BSD License',
+    license='GPL License',
     keywords = "django track activity requests detective",
 )
