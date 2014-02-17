@@ -24,11 +24,24 @@ class AdminPathFilter(admin.SimpleListFilter):
 
 
 class TrackingLogAdmin(admin.ModelAdmin):
+    readonly_fields = ("created", 'modified', 'full_path')
     date_hierarchy = 'created'
     list_display = ['pk', 'user', 'request_method', 'status_code', 'ip_address', 'path', 'params_get', 'params_post',
                     'is_secure', 'is_ajax', 'is_debug', 'created']
     list_filter = [AdminPathFilter, 'is_secure', 'is_ajax', 'is_debug', 'created', 'status_code', 'request_method']
     search_fields = ['session', 'user_agent', 'params_get', 'params_post', 'ip_address', 'path']
+    fields = (
+        ('created', 'modified'),
+        ('request_method', 'path', 'status_code'),
+        ('is_secure', 'is_ajax', 'is_debug'),
+        ('full_path',),
+        ('params_get',),
+        ('params_post',),
+        ('session',),
+        ('user', 'ip_address'),
+        ('language_code', 'timezone', 'content_type', 'user_agent'),
+        ('response',),
+    )
 
     def has_add_permission(self, request):
         return False

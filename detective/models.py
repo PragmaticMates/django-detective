@@ -1,3 +1,6 @@
+import ast
+import urllib
+
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
@@ -44,3 +47,16 @@ class TrackingLog(models.Model):
         verbose_name = _(u'tracking log')
         verbose_name_plural = _(u'tracking logs')
         ordering = ('-created', )
+
+    @property
+    def full_path(self):
+        get_params = ast.literal_eval(self.params_get)
+        query_pairs = [(k, v) for k, vlist in get_params.iteritems() for v in vlist]
+        query_string = urllib.urlencode(query_pairs)
+        return u'%s?%s' % (self.path, query_string)
+
+    @property
+    def query_string(self):
+        get_params = ast.literal_eval(self.params_get)
+        query_pairs = [(k, v) for k, vlist in get_params.iteritems() for v in vlist]
+        return urllib.urlencode(query_pairs)
