@@ -3,6 +3,9 @@ from django.conf import settings
 # Site debug
 DETECTIVE_DEBUG = getattr(settings, 'DEBUG', False)
 
+# If True, response data will be saved in database
+DETECTIVE_SAVE_RESPONSES = getattr(settings, 'DETECTIVE_SAVE_RESPONSES', False)
+
 # If True, internal server error responses with exception (500) are stored in database
 DETECTIVE_SAVE_ERROR_RESPONSES = getattr(settings, 'DETECTIVE_SAVE_ERROR_RESPONSES', True)
 

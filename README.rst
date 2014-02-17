@@ -45,6 +45,9 @@ Installation
 Settings
 ''''''''
 
+DETECTIVE_SAVE_RESPONSES
+    If True, response data will be saved in database. Default: ``False``.
+
 DETECTIVE_SAVE_ERROR_RESPONSES
     If True, internal server error responses with exception (500) are stored in database. Default: ``True``.
 

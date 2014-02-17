@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.contrib.admin.util import flatten_fieldsets
 from django.utils.translation import ugettext_lazy as _
 
 from models import TrackingLog
@@ -31,5 +32,14 @@ class TrackingLogAdmin(admin.ModelAdmin):
 
     def has_add_permission(self, request):
         return False
+
+    def get_readonly_fields(self, request, obj=None):
+        if self.declared_fieldsets:
+            return flatten_fieldsets(self.declared_fieldsets)
+        else:
+            return list(set(
+                [field.name for field in self.opts.local_fields] +
+                [field.name for field in self.opts.local_many_to_many]
+            ))
 
 admin.site.register(TrackingLog, TrackingLogAdmin)

@@ -15,7 +15,7 @@ DatabaseError = Database.DatabaseError
 
 from models import TrackingLog
 from settings import DETECTIVE_TRACK_AJAX_REQUESTS, DETECTIVE_TRACK_ANONYMOUS_REQUESTS, DETECTIVE_SAVE_ERROR_RESPONSES, \
-    DETECTIVE_DEBUG
+    DETECTIVE_DEBUG, DETECTIVE_SAVE_RESPONSES
 
 
 class TrackingMiddleware(object):
@@ -49,32 +49,26 @@ class TrackingMiddleware(object):
             language_code = None
 
         # Timezone
-        #try:
-        #    timezone = request.META['TZ']
-        #except KeyError:
-        #    timezone = None
+        timezone = request.META.get('TZ', None)
 
         # User agent
-        try:
-            user_agent = request.META['HTTP_USER_AGENT']
-        except KeyError:
-            user_agent = None
+        user_agent = request.META.get('HTTP_USER_AGENT', None)
 
         # Content type
-        try:
-            content_type = request.META['CONTENT_TYPE']
-        except KeyError:
-            content_type = None
+        content_type = request.META.get('CONTENT_TYPE', None)
 
         # Response content
         response_content = None
-        if response and response.status_code == 500 and DETECTIVE_SAVE_ERROR_RESPONSES:
-            #response_content = response.content # this is only useful if DEBUG is True
-            # if DEBUG is False, simulate that DEBUG is enabled and get technical exception details:
-            from django.views import debug
-            exc_info = sys.exc_info()
-            debug_response = debug.technical_500_response(request, *exc_info)
-            response_content = debug_response.content
+        if response:
+            if response.status_code == 500 and DETECTIVE_SAVE_ERROR_RESPONSES:
+                #response_content = response.content # this is only useful if DEBUG is True
+                # if DEBUG is False, simulate that DEBUG is enabled and get technical exception details:
+                from django.views import debug
+                exc_info = sys.exc_info()
+                debug_response = debug.technical_500_response(request, *exc_info)
+                response_content = debug_response.content
+            elif response.status_code != 500 and DETECTIVE_SAVE_RESPONSES:
+                response_content = response.content
 
         # Store to database
         try:
@@ -91,7 +85,7 @@ class TrackingMiddleware(object):
                 session=str(dict(request.session)),
                 status_code=response.status_code,
                 language_code=language_code,
-                #timezone=timezone,
+                timezone=timezone,
                 content_type=content_type,
                 user_agent=user_agent,
                 response=response_content,
