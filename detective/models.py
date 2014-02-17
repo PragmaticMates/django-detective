@@ -50,10 +50,7 @@ class TrackingLog(models.Model):
 
     @property
     def full_path(self):
-        get_params = ast.literal_eval(self.params_get)
-        query_pairs = [(k, v) for k, vlist in get_params.iteritems() for v in vlist]
-        query_string = urllib.urlencode(query_pairs)
-        return u'%s?%s' % (self.path, query_string)
+        return u'%s?%s' % (self.path, self.query_string)
 
     @property
     def query_string(self):
