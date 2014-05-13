@@ -43,10 +43,7 @@ class TrackingMiddleware(object):
             ip = request.META.get('REMOTE_ADDR', None)
 
         # Language code
-        try:
-            language_code = str(request.LANGUAGE_CODE)
-        except AttributeError:
-            language_code = None
+        language_code = getattr(request, 'LANGUAGE_CODE', None)
 
         # Timezone
         timezone = request.META.get('TZ', None)
