@@ -39,7 +39,9 @@ Installation
 
 3. Add ``detective.middleware.TrackingMiddleware`` to ``MIDDLEWARE_CLASSES`` in your Django settings file
 
-4. Sync your database
+4. Include ``detective.urls`` in your urls.py
+
+5. Sync your database
 
 
 Settings

@@ -1,5 +1,6 @@
 import ast
 import urllib
+from django.core.urlresolvers import reverse
 
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
@@ -47,6 +48,9 @@ class TrackingLog(models.Model):
         verbose_name = _(u'tracking log')
         verbose_name_plural = _(u'tracking logs')
         ordering = ('-created', )
+
+    def get_absolute_url(self):
+        return reverse('detective:trackinglog_detail', args=(self.pk, ))
 
     @property
     def full_path(self):
