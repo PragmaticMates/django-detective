@@ -1,14 +1,14 @@
 import ast
 import urllib
-from django.core.urlresolvers import reverse
 
+from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 # Django 1.5 support, falls back to auth.User to transparently work with <1.5
 try:
-    from django.contrib.auth import get_user_model
-    User = get_user_model()
+    from django.conf import settings
+    User = settings.AUTH_USER_MODEL
 except ImportError:
     from django.contrib.auth.models import User
 
@@ -18,7 +18,7 @@ class TrackingLog(models.Model):
         blank=True, null=True, default=None)
     request_method = models.CharField(max_length=16, verbose_name=_(u'request method'))
 #    remote_addr = models.CharField(max_length=255)
-    ip_address = models.IPAddressField(verbose_name=_(u'IP address'),
+    ip_address = models.GenericIPAddressField(verbose_name=_(u'IP address'),
         blank=True, null=True, default=None)
     path = models.CharField(max_length=1024, verbose_name=_(u'path'))
 #    query_string = models.CharField(max_length=255)
@@ -41,7 +41,7 @@ class TrackingLog(models.Model):
     is_ajax = models.BooleanField(verbose_name=_(u'ajax'))
     is_debug = models.BooleanField(verbose_name=_(u'debug'))
     created = models.DateTimeField(verbose_name=_(u'created'), auto_now_add=True)
-    modified = models.DateTimeField(verbose_name=_(u'created'), auto_now=True)
+    modified = models.DateTimeField(verbose_name=_(u'modified'), auto_now=True)
 
     class Meta:
         db_table = 'detective_trackinglogs'

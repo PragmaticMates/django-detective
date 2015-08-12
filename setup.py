@@ -4,7 +4,7 @@ from setuptools import setup
 
 setup(
     name='django-detective',
-    version='0.4.0',
+    version='0.4.1',
     description='Django app that tracks all user requests.',
     long_description=open('README.rst').read(),
     author='Pragmatic Mates',
@@ -14,6 +14,8 @@ setup(
     url='https://github.com/PragmaticMates/django-detective',
     packages=[
         'detective',
+        'detective.migrations',
+        'detective.south_migrations',
     ],
     include_package_data=True,
     install_requires=('django',),

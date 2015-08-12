@@ -1,0 +1,1 @@
+- in v0.4.1, IPAddressField was changed to GenericIPAddressField because of Django 1.9 support, we need to create south migration

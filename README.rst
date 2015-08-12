@@ -22,7 +22,7 @@ Django app that tracks all user requests and saves following data to database:
 - created and modified timestamps
 
 
-Tested on Django 1.4.5.
+Tested on Django 1.4.5 and Django 1.8.3
 
 
 Requirements
@@ -39,7 +39,7 @@ Installation
 
 3. Add ``detective.middleware.TrackingMiddleware`` to ``MIDDLEWARE_CLASSES`` in your Django settings file
 
-4. Include ``detective.urls`` in your urls.py
+4. Include ``detective.urls`` in your urls.py with ``detective`` namespace
 
 5. Sync your database
 

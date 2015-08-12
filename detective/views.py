@@ -28,5 +28,5 @@ class TrackingLogDetailView(DetailView):
         try:
             json_obj = json.loads(tracking_log.response)
             return JsonResponse(json_obj)
-        except ValueError:
+        except (TypeError, ValueError):
             return HttpResponse(tracking_log.response)

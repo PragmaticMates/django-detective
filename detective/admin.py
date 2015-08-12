@@ -38,8 +38,9 @@ class TrackingLogAdmin(admin.ModelAdmin):
         ('params_get',),
         ('params_post',),
         ('session',),
-        ('user', 'ip_address'),
-        ('language_code', 'timezone', 'content_type', 'user_agent'),
+        ('user', 'ip_address', 'user_agent'),
+        ('language_code', 'timezone',),
+        ('content_type',),
         ('response',),
     )
 
