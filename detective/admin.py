@@ -28,7 +28,7 @@ class TrackingLogAdmin(admin.ModelAdmin):
     date_hierarchy = 'created'
     list_display = ['pk', 'user', 'request_method', 'status_code', 'ip_address', 'path', 'params_get', 'params_post',
                     'is_secure', 'is_ajax', 'is_debug', 'created']
-    list_filter = [AdminPathFilter, 'is_secure', 'is_ajax', 'is_debug', 'created', 'status_code', 'request_method']
+    list_filter = [AdminPathFilter, 'is_secure', 'is_ajax', 'is_debug', 'created', 'status_code', 'request_method', 'user']
     search_fields = ['session', 'user_agent', 'params_get', 'params_post', 'ip_address', 'path']
     fields = (
         ('created', 'modified'),
