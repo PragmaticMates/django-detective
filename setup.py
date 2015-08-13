@@ -4,7 +4,7 @@ from setuptools import setup
 
 setup(
     name='django-detective',
-    version='0.5.0',
+    version='0.5.1',
     description='Django app that tracks all user requests.',
     long_description=open('README.rst').read(),
     author='Pragmatic Mates',

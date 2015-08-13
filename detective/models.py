@@ -54,7 +54,7 @@ class TrackingLog(models.Model):
 
     @property
     def full_path(self):
-        return u'%s?%s' % (self.path, self.query_string)
+        return u'%s?%s' % (self.path, self.query_string) if self.query_string else self.path
 
     @property
     def query_string(self):
