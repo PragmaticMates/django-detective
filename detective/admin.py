@@ -29,7 +29,7 @@ class AdminPathFilter(admin.SimpleListFilter):
 
 
 class TrackingLogAdmin(admin.ModelAdmin):
-    readonly_fields = ("created", 'modified', 'full_path')
+    readonly_fields = ("created", 'modified', 'path')
     date_hierarchy = 'created'
     list_display = ['pk', 'user', 'request_method', 'status_code', 'ip_address', 'path', 'params_get', 'params_post',
                     'is_secure', 'is_ajax', 'is_debug', 'created']
@@ -39,7 +39,6 @@ class TrackingLogAdmin(admin.ModelAdmin):
         ('created', 'modified'),
         ('request_method', 'path', 'status_code'),
         ('is_secure', 'is_ajax', 'is_debug'),
-        ('full_path',),
         ('params_get',),
         ('params_post',),
         ('session',),
@@ -53,7 +52,12 @@ class TrackingLogAdmin(admin.ModelAdmin):
         return False
 
     def get_readonly_fields(self, request, obj=None):
-        if self.declared_fieldsets:
+        try:
+            declared_fieldsets = self.declared_fieldsets
+        except AttributeError:
+            declared_fieldsets = False
+
+        if declared_fieldsets:
             return flatten_fieldsets(self.declared_fieldsets)
         else:
             return list(set(
