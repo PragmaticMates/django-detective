@@ -18,9 +18,9 @@ class TrackingLog(models.Model):
         blank=True, null=True, default=None)
     request_method = models.CharField(max_length=16, verbose_name=_(u'request method'))
 #    remote_addr = models.CharField(max_length=255)
-    ip_address = models.GenericIPAddressField(verbose_name=_(u'IP address'),
+    ip_address = models.GenericIPAddressField(verbose_name=_(u'IP address'), db_index=True,
         blank=True, null=True, default=None)
-    path = models.CharField(max_length=1024, verbose_name=_(u'path'))
+    path = models.CharField(max_length=1024, verbose_name=_(u'path'), db_index=True)
 #    query_string = models.CharField(max_length=255)
 #    full_path = models.CharField(max_length=255)
     params_get = models.TextField(verbose_name=_(u'GET params'))
