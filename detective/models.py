@@ -40,7 +40,7 @@ class TrackingLog(models.Model):
     is_secure = models.BooleanField(verbose_name=_(u'secure'))
     is_ajax = models.BooleanField(verbose_name=_(u'ajax'))
     is_debug = models.BooleanField(verbose_name=_(u'debug'))
-    created = models.DateTimeField(verbose_name=_(u'created'), auto_now_add=True)
+    created = models.DateTimeField(verbose_name=_(u'created'), auto_now_add=True, db_index=True)
     modified = models.DateTimeField(verbose_name=_(u'modified'), auto_now=True)
 
     class Meta:
