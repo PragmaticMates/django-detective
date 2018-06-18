@@ -1,6 +1,6 @@
 from django.conf.urls import url
 
-from views import TrackingLogDetailView
+from detective.views import TrackingLogDetailView
 
 
 urlpatterns = [

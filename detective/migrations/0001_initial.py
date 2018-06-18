@@ -33,7 +33,7 @@ class Migration(migrations.Migration):
                 ('is_debug', models.BooleanField(verbose_name='debug')),
                 ('created', models.DateTimeField(auto_now_add=True, verbose_name='created')),
                 ('modified', models.DateTimeField(auto_now=True, verbose_name='created')),
-                ('user', models.ForeignKey(default=None, blank=True, to=settings.AUTH_USER_MODEL, null=True, verbose_name='user')),
+                ('user', models.ForeignKey(default=None, blank=True, to=settings.AUTH_USER_MODEL, null=True, verbose_name='user', on_delete=models.CASCADE)),
             ],
             options={
                 'ordering': ('-created',),

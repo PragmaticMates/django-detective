@@ -13,12 +13,18 @@ except ImportError as e:
 
 DatabaseError = Database.DatabaseError
 
-from models import TrackingLog
-from settings import DETECTIVE_TRACK_AJAX_REQUESTS, DETECTIVE_TRACK_ANONYMOUS_REQUESTS, DETECTIVE_SAVE_ERROR_RESPONSES, \
-    DETECTIVE_DEBUG, DETECTIVE_SAVE_RESPONSES
+try:
+    from django.utils.deprecation import MiddlewareMixin
+except ImportError:  # Django < 1.10
+    # Works perfectly for everyone using MIDDLEWARE_CLASSES
+    MiddlewareMixin = object
+
+from detective.models import TrackingLog
+from detective.settings import DETECTIVE_TRACK_AJAX_REQUESTS, DETECTIVE_TRACK_ANONYMOUS_REQUESTS, \
+    DETECTIVE_SAVE_ERROR_RESPONSES, DETECTIVE_DEBUG, DETECTIVE_SAVE_RESPONSES
 
 
-class TrackingMiddleware(object):
+class TrackingMiddleware(MiddlewareMixin):
     def process_response(self, request, response):
         # Ajax request
         if request.is_ajax() and not DETECTIVE_TRACK_AJAX_REQUESTS:
@@ -26,7 +32,10 @@ class TrackingMiddleware(object):
 
         # Currently logged in user
         try:
-            user = request.user if request.user.is_authenticated() else None
+            try:
+                user = request.user if request.user.is_authenticated() else None
+            except TypeError:
+                user = request.user if request.user.is_authenticated else None
         except AttributeError:
             return response
 

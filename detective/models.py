@@ -1,7 +1,12 @@
 import ast
 import urllib
 
-from django.core.urlresolvers import reverse
+try:
+    # Django < 2.0 support
+    from django.core.urlresolvers import reverse
+except ImportError:
+    from django.urls import reverse
+
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
@@ -14,7 +19,7 @@ except ImportError:
 
 
 class TrackingLog(models.Model):
-    user = models.ForeignKey(User, verbose_name=_(u'user'),
+    user = models.ForeignKey(User, verbose_name=_(u'user'), on_delete=models.CASCADE,
         blank=True, null=True, default=None)
     request_method = models.CharField(max_length=16, verbose_name=_(u'request method'))
 #    remote_addr = models.CharField(max_length=255)

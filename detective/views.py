@@ -5,7 +5,7 @@ from django.utils.decorators import method_decorator
 from django.views.generic import DetailView
 
 
-from models import TrackingLog
+from detective.models import TrackingLog
 
 
 class JsonResponse(HttpResponse):

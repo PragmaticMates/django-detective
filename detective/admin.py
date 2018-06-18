@@ -7,7 +7,7 @@ except ImportError:
 
 from django.utils.translation import ugettext_lazy as _
 
-from models import TrackingLog
+from detective.models import TrackingLog
 
 
 class AdminPathFilter(admin.SimpleListFilter):
